@@ -54,7 +54,13 @@ void tat(int comptime[],int arrive[],int turn_around[],int count)
 
 void waitin_time(int comptime[],int burst[],int waitTime[],int count) {
   for (int i = 0; i < count; i++) {
-    waitTime[i]=comptime[i]-burst[i];
+    int temp = comptime[i]-burst[i];
+    if (temp > 0)
+    {
+      waitTime[i]= temp;
+    }
+    else
+      waitTime[i] = 0; 
   }
 }
 
@@ -190,9 +196,12 @@ waitin_time(turn_around,burst,waitTime,s1ze);
 result_printer(proc,arrive,burst,completion_time,turn_around,waitTime,s1ze);
 }
 
+
+//shortest job first programmmmm
 int sjf(int burst[],int arrive[],int proc[],int s1ze)
 {
   int temp_burst[100],completion_time[100];
+  //sort the processess
   bubbleSort(arrive,burst,proc,s1ze);
   copy_over(burst,temp_burst,s1ze);
   int temp1=0,temp2=0,temp3=0;
@@ -210,7 +219,10 @@ int sjf(int burst[],int arrive[],int proc[],int s1ze)
     if (arrive[temp1]<completion_time[temp2])
     {
       temp3=completion_time[temp2]-arrive[temp1];
-      completion_time[temp1]=completion_time[temp1]+temp3;
+      if (temp3 > 0)
+        completion_time[temp1]=completion_time[temp1]+temp3;
+      else
+        completion_time[temp1]= completion_time[temp1] + 0;
     }
     temp2=temp1;
   }
@@ -220,7 +232,10 @@ int sjf(int burst[],int arrive[],int proc[],int s1ze)
   if (arrive[temp1]<completion_time[temp2])
   {
     temp3=completion_time[temp2]-arrive[temp1];
-    completion_time[temp1]=completion_time[temp1]+temp3;
+    if (temp3 > 0)
+        completion_time[temp1]=completion_time[temp1]+temp3;
+    else
+        completion_time[temp1]= completion_time[temp1] + 0;
   }
   bubbleSort(proc,arrive,burst,s1ze);
   int turn_around[100];
@@ -235,7 +250,7 @@ void menu()
   system("cls");
   system("color e");
   cout << "\t\t\t::::scheduling algorithms:::"<< endl;
-  cout << "\t\t\t developed by TEAM_W1NDW@RD" << endl;
+  cout << "\t\t\t developed by WINDY_WINDWARD(GITHUB)" << endl;
   Sleep(3000);
   system("cls");
   cout << "::Availabel Options::";
